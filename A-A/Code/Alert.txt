@@ -1,0 +1,5 @@
+如果输入 Javac *.java 后报错：
+    HelloWorld.java:4: 错误: 编码 GBK 的不可映射字符 (0xAA)
+
+则直接输入:
+    javac -encoding utf-8 *.java
