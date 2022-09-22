@@ -6,6 +6,10 @@
 
 Warehouse created and updated
 
+### 2022-09-22
+
+Unit A-A ended, some notes are missing
+
 
 
 ## Statement
