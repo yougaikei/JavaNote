@@ -1218,7 +1218,7 @@ for(设置初始值; 条件语句; 初始值递增( 减 )){
 
 ---
 
-### break 关键字
+### 4.7 break 关键字
 
 - break 用于结束循环体，直接退出当前执行体
 
@@ -1239,4 +1239,256 @@ for(;;){
 
 //下方语句
 ```
+
+---
+
+### 4.8 while 循环
+
+- while 用于判断条件是否成立, 成立则执行循环体, 出成立则跳出
+
+```java in note
+while ( 条件 或 条件表达式 ) {
+    循环体
+}
+```
+
+---
+
+### 4.9 for && while 对比
+
+- while 和 for 循环完全可以互换, 但要注意: 在条件中是明确循环条件, 还是明确循环次数, 如果是 条件则选择 while, 而如果不是明确条件而是明确 次数 则选用 for 循环
+
+---
+
+### 4.10 do while 循环
+
+- 先执行一次循环体再去判断是否达成条件, 达成则再次执行循环体, 否则不执行
+
+```java
+do {
+    循环体
+}while(条件)
+```
+
+---
+
+## 5. 数组的应用
+
+### 5.1 一维数组
+
+#### 5.1.1 基本概念
+
+- 当需要在 Java 程序中记录单个数据内容时, 则声明一个变量即可
+- 当需要在 Java 程序中记录多个变量且类型相同的时候, 则声明一个一维数组, 一维数组本质上就是在内存空间中申请一段连续的存储单元
+- 数组是相同数据类型的多个元素的容器, 元素按照现行顺序排列, 在 Java 语句中体现为一种引用数据类型
+
+#### 5.1.2 声明方式
+
+- 声明时: 数据类型[] 名称 = new 数据类型[长度]；
+- 调用时候需要表明调用的具体位置, 且调用数组的 length 属性可以获取数组的长度
+
+※ 注意: 下表是从 0 开始, 而长度不是
+
+### 5.2 内存结构 ( 栈区 )
+
+- 栈用来存放程序运行过程当中所有的局部变量, 一个运行的 Java 程序从开始到结束会有很多次变量的声明
+
+### 5.3 内存结构 ( 堆区 )
+
+- JVM 会在其内存空间中开辟一个称为 "" 的存储空间, 这部分空间用于存储使用 new 关键字创建的 <span style="color: red; text-decoration: underline; font-weight: bold;">数组</span> 和 <span style="color: red; text-decoration: underline; font-weight: bold;">对象</span> .
+
+### 5.4 一维数组的优缺点
+
+- 可以直接通过下标的方式访问指定位置的元素, 具有速度快的优势
+- 数组要求所有元素的类型相同
+- 数组要求内存空间连续, 并且长度确定就不能再被修改了
+- 增加元素 和 删除元素 时可能移动大量元素, 效率低
+
+### 5.5 数组工具类的概念
+
+- java.util.Arrays 类可以实现对数组中元素的遍历、查找 和 排序 等...
+
+- 使用 Arrays.toString(oArr) 的方式可以直接将一维数组的值打印出来
+
+```java
+import java.util.Arrays;
+public class ImportArrFirst {
+    
+    public static void main(String[] args){
+
+        // A. 声明一个数组; init: 5, 10, 15, 20, 25
+        int[] oArr = {5, 10, 15, 20, 25};
+
+        // B. 原始打印数组
+        System.out.println("---------- 原始打印数组 ----------");
+        System.out.print("[");
+        for(int i = 0; i < oArr.length; i++){
+            System.out.print(oArr[i] + (i == oArr.length - 1 ? "" : ", "));
+        }
+        System.out.println("]");
+
+        // C. 使用 Arrays.toString() 打印数组
+        System.out.println("---------- Arrays.toString() ----------");
+        System.out.println(Arrays.toString(oArr));
+    }
+    
+}
+
+```
+
+- 使用 Arrays.fill( oArr, 填充内容) 对数组中的每一个元素进行填充
+
+```java
+import java.util.Arrays;
+public class ImportArrSecond {
+    
+    public static void main(String[] args) {
+        
+        // 创建两个长度为 5 的数组
+        int[] oArr1 = new int[5];
+        int[] oArr2 = new int[5];
+
+        System.out.println("=========== 基础赋值操作开始 ===========");
+        // 数组 oArr1 赋值为 10
+        for (int i = 0; i < oArr1.length; i++) {
+            oArr1[i] = 10;
+        }
+
+        // 打印 oArr1 数组
+        System.out.println("oArr1 数组的值为: " + Arrays.toString(oArr1));
+        System.out.println("=========== 基础赋值操作结束 ===========");
+
+        System.out.println("=========== 数组 fill 赋值开始 ===========");
+        // 数组 oArr2 赋值为 20
+        Arrays.fill(oArr2, 20);
+
+        // 打印 oArr2 数组
+        System.out.println("oArr2 数组的值为: " + Arrays.toString(oArr2));
+        System.out.println("=========== 数组 fill 赋值结束 ===========");
+
+    }
+}
+
+```
+
+- 使用 Arrays.equals(oArr1, oArr2) 对两个数组进行比较, 要求: 内容相同、顺序相同
+
+```java
+import java.util.Arrays;
+public class ImportArrThird {
+    
+    public static void main(String[] args){
+
+        // 创建两个数组
+        int[] oArr1 = new int[5];
+        int[] oArr2 = new int[5];
+        
+        // 填充两个数组 10
+        Arrays.fill(oArr1, 10);
+        Arrays.fill(oArr2, 10);
+
+        // 使用 Arrays.equals() 方法比较两个数组
+        System.out.println("oArr1 和 oArr2 数组是否相等: " + (Arrays.equals(oArr1, oArr2)? "IsTrue": "IsFalse" ));
+    }
+}
+
+// oArr1 和 oArr2 数组是否相等: IsTrue
+```
+
+- 使用 Arrays.sort(oArr) 对数组进行从小到大的排序
+- 使用 Arrays.binarySearch(oArr, 查找内容)  对数组内容进行查找, 输出为下标
+
+```java
+import java.util.Arrays;
+public class ImportArrFourthly {
+    
+    public static void main(String[] args) {
+        int[] oArr = { 2, 3, 1, 4, 5, 9, 6, 8, 7 };
+        System.out.println("------ 排序前的数组 ------");
+        System.out.println(Arrays.toString(oArr));
+        System.out.println("--------------------");
+
+        // 使用 Arrays.sort() 方法对数组进行排序
+        Arrays.sort(oArr);
+        System.out.println("------ 排序后的数组 ------");
+        System.out.println(Arrays.toString(oArr));
+        System.out.println("--------------------");
+
+        // 使用 Arrays.binarySearch() 方法查找元素
+        System.out.println("元素 5 在数组中的下标位置为: " + Arrays.binarySearch(oArr, 5));
+    }
+}
+// [2, 3, 1, 4, 5, 9, 6, 8, 7]
+// [1, 2, 3, 4, 5, 6, 7, 8, 9]
+// 元素 5 在数组中的下标位置为: 4
+```
+
+### 5.6 二维数组
+
+- 在一维数组中调取指定位置的数据可以使用: oArr[下标]; 而在二维数组中需要使用: oArr[外层数组的下标]\[内层数组的下标]
+
+```java
+import java.util.Arrays;
+public class ArrsQuared {
+    
+    public static void main(String[] args){
+        int[] oArr = new int[5];
+
+        int[][] oArrs = new int[5][5];
+
+        Arrays.fill(oArr, 5);
+        System.out.println("---------- 一维数组 ----------");
+        System.out.println(Arrays.toString(oArr));
+
+        for (int i = 0; i < oArrs.length; i++) {
+            Arrays.fill(oArrs[i], i + 1);
+        }
+
+        System.out.println("---------- 二维数组 ----------");
+        for (int i = 0; i < oArrs.length; i++) {
+            System.out.println(Arrays.toString(oArrs[i]));
+            System.out.println("=============================");
+        }
+    }
+}
+
+```
+
+- 杨辉三角案例:
+
+```java
+import java.util.Arrays;
+import java.util.Scanner;
+public class ArrTriangle {
+    
+    public static void main(String[] args){
+       
+        System.out.println("请用户输入一个整数:");
+        Scanner oSc = new Scanner(System.in);
+        int iNum = oSc.nextInt();
+
+        // 创建一个对应用户输入行数的数组, 二维数组处暂不声明
+        int[][] oArrs = new int[iNum][];
+
+        // 初始化二维数组
+        for(int i = 0; i < iNum; i++){
+            // 创建实体化
+            oArrs[i] = new int[i+1];
+        
+            for(int j = 0; j < i + 1; j++){
+                oArrs[i][j] = 0 == j || j == i ? 1 : oArrs[i-1][j-1] + oArrs[i-1][j];
+            }
+        }
+
+        for(int i = 0; i < iNum; i++){
+            System.out.println(Arrays.toString(oArrs[i]));
+        }
+
+        oSc.close();
+    }
+}
+
+```
+
+
 
