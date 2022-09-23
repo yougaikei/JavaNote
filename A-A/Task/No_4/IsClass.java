@@ -29,7 +29,7 @@ public class IsClass {
         // 记录不合格的人数
         int oAborted = 0;
 
-        // @Process: 遍历数组，判断每个数是否大于等于 60，如果不是，则 oAborted + 1
+        // 遍历数组，判断每个数是否大于等于 60，如果不是，则 oAborted + 1
         for (int i = 0; i < oInput; i++) {
             if (oArr[i] < 60) {
                 oAborted++;
