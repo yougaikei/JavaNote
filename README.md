@@ -1,16 +1,20 @@
-# JavaNote
+# Java Note
 
-##  ToUpdate
+##  To Update
 
 ### 2022-09-19
 
-Warehouse created and updated
+- Warehouse created and updated
 
 ### 2022-09-22
 
-Unit A-A ended, some notes are missing
+- Unit A-A ended, some notes are missing
 
+### 2022-10-04
 
+- Added JDBC content and improved some SQL content
+
+---
 
 ## Statement
 

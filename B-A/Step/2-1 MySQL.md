@@ -457,6 +457,12 @@
     SELECT DATABASE();
 ```
 
+​    3、查询所有的数据库名称: SHOW DATABASES;
+
+```sql
+SHOW DATABASES;
+```
+
 ---
 
 ### 1.14 修改数据库
@@ -790,14 +796,8 @@ INSERT INTO 表名 VALUES(列值1, ..., 列值N);
 
 #### 1)、修改整列
 
-​    Name: 表的名称
-
-​    ValName: 列的属性名称
-
-​    Val: 列中该行的属性值
-
 ``` sql
-	UPDATE Name SET ValName = Val;
+	UPDATE 表名 SET 列明 = 属性值;
 ```
 
    <b style='color: red;'> ※ 注: 此操作慎用！</b>
@@ -817,7 +817,7 @@ INSERT INTO 表名 VALUES(列值1, ..., 列值N);
 ​    IfVal: 条件列该行的属性值
 
 ``` sql
-	UPDATE Name SET ValName = Val WHERE IfValName = IfVal;
+	UPDATE 表名 SET 列明 = 属性值 WHERE 条件名称 = 属性值;
 ```
 
 #### 3)、多条修改
@@ -1180,4 +1180,364 @@ INSERT INTO 表名 VALUES(列值1, ..., 列值N);
 ```
 
 <p style='color: red;'>&emsp;&emsp; ※ 注: WHERE 和 HAVING 是有区别的。WHERE: 1、在分组前进行过滤；2、WHERE 后面不能跟 <u>聚合函数</u> 。HAVING: 1、在分组后进行条件过滤；2、HAVING 后面可以书写 聚合函数 。</p>
+
+----
+
+### 2.4 limit 关键字
+
+
+
+
+
+---
+
+### 2.5 约束的介绍
+
+
+
+
+
+---
+
+### 2.6 主键约束
+
+
+
+
+
+---
+
+### 2.7主键自增
+
+
+
+
+
+---
+
+### 2.8 DELETE 和 TRUNCATE 对自增长的影响
+
+
+
+
+
+---
+
+### 2.9  非空约束
+
+
+
+
+
+---
+
+### 2.10 唯一约束
+
+
+
+
+
+---
+
+### 2.11 默认值
+
+
+
+
+
+---
+
+### 2.12事务的基本概念和转账操作
+
+- 事务是由一条或多条 SQL 指令组成的一个整体, 事务中的操作只有两个结果: 1( true ), 0( false ), 如果失败则会自动回滚, 将之前的操作反向撤销.
+
+- 创建一个测试账户
+
+```sql
+-- 创建 bank( 银行 ) 表
+CREATE TABLE bank(
+    -- 主键
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    -- 姓名
+    NAME VARCHAR(10),
+    -- 余额
+    money DOUBLE
+);
+
+-- 添加测试用户
+INSERT INTO bank (NAME, money) VALUES ('Tom', 1000),('Jerry', 1000),('Spike', 1000);
+
+```
+
+- 进行转账操作 <b style="color: red;">( 不推荐 )</b>
+
+```sql
+-- 对 Tom 的账户减去 500
+UPDATE bank SET money = money - 500 WHERE NAME = 'Tom';
+
+-- 而对 Jerry 的账户加上 500
+UPDATE bank SET money = money + 500 WHERE NAME = 'Jerry';
+```
+
+- 但以上的方式如果执行到一半...突然报错了则会对用户造成过大的损失...所以并不推荐使用以上方式
+- 事务的操作:
+  - 手动提交事务
+    - 开启事务 START TRANSACTION; 或 BEGIN;
+    - 提交事务 COMMIT;
+    - 回滚事务 ROLLBACK;
+  - 自动提交事务 ( 默认方式 )
+  - 取消自动提交
+
+```SQL
+SHOW VARIABLES LIKE 'autocommit'
+
+/*
+	on: 自动提交模式
+	off: 手动提交模式
+*/
+
+-- 更改时
+SET @@autocommit = on;
+
+-- SET @@autocommit = off; // 更改后需要在语句后方自行添加 COMMIT 语句进行方法体的执行
+```
+
+- 进行转账操作 <b style="color: #67C23A;">( 推荐)</b>
+- 手动提交效果: 
+
+```sql
+-- 开启事务
+START TRANSACTION;
+-- 执行转账操作: Tom - 500 => Jerry + 500 通过查询名字 = 姓名
+UPDATE bank SET	money  = money - 500 WHERE NAME = 'Tom';
+UPDATE bank SET	money  = money + 500 WHERE NAME = 'Jerry';
+-- 执行上方方法体
+COMMIT
+```
+
+
+
+
+
+---
+
+### 2.13 MySQL 四大特性
+
+- MySQL 事务的四大特性:
+  - 原子性: 每个事务都一个整体, 不可以再拆分, 事务中的所有 SQL 语句要么执行成功, 要么执行失败
+  - 一致性: 事务在执行之前, 数据库的状态和事务执行后的状态要保持一致性
+  - 隔离性: 事务与事务之间不应该相互影响, 执行时要保持隔离状态
+  - 持久性: 一旦事务执行成功, 对数据的修改是永久的
+
+---
+
+### 2.14 事务隔离级别
+
+- 在 MySQL 中的各个事物之间是隔离的, 相互独立, 但是如果在同时时段出现了多个事务且对数据库中的同一批数据进行并发访问或修改时, 就会引发一些问题, 如果不想出现以上问题, 可以通过设置不同的隔离级别来进行解决
+
+- 并发访问的问题
+
+  - 脏读: 一个事务读取到了另一个事务没有提交的数据
+  - 不可重复读: 一个事务中两次读取到的数据不一致
+  - 幻读: 一个事务中, 一次查询的结果, 无法支撑后续的业务操作
+
+- 设置隔离级别
+
+  - read uncommited: 
+    读未提交
+    防止问题: 无
+  - read commited ( Oracle 的默认隔离级别 ):
+    读已提交
+    防止问题: 脏读
+  - repeatable read ( MySQL 的默认隔离级别 ):
+    可重复读
+    防止问题: 脏读、不可重复读
+  - serializable:
+    串行化
+    防止问题: 脏读、幻读、不可重复读
+
+  ※ 注意: 以上的隔离级别从小到大, 安全性也是从低到高的, 但是相对的安全性越来越高, 但效率却时越来越低的, 所以使用的时候还需要根据不同的情况选择不同的隔离级别
+
+- 查询 ||设置  隔离级别
+
+```sql
+-- 查询隔离级别
+SELECT @@tx_isolation;
+
+-- 设置隔离级别
+SET GLOBAL TRANSACTION ISOLATION LEVEL 级别名称;
+```
+
+---
+
+## 3. 多表、外键、数据库设计
+
+---
+
+### 1. 多表
+
+- 当一个表中的内容重复过多, 会显得过于沉余, 为了更便于阅读, 所以会创建多张表单
+- 关系: 主表, 从表, 外键值 ( 主表中从表的 id 或其他关键值 )
+
+### 2. 外键约束
+
+- 外键约束可以将两张表之间产生能一个关联性, 从而保证主表引用的真实性和可靠性
+
+```sql
+CREATE TABLE 表名(
+    -- @外键约束名称: 类似于一个变量名称
+  CONSTRAINT 外键约束名称 FOREIGN KEY(内表字段) REFERENCES 外表字段
+)
+```
+
+- 如: 
+
+```sql
+-- 创建一个对应的数据库
+CREATE DATABASE 需要创建的数据库的库名 CHARACTER SET UTF8; -- 如果有 emoji 表情的表单可以创建 UTF8MB4
+
+-- 创建城市表单
+CREATE TABLE 表名称(
+    CrtyId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    CrtyName VARCHAR(255),
+    CrtyProvince VARCHAR(255)
+);
+-- 创建带外键约束的成员表单
+CREATE TABLE 表名称(
+	MemberId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	MemberName VARCHAR(20),
+	MemberAge INT,
+	MemberSex VARCHAR(10),
+	MemberCityId INT,
+	-- 添加外键约束
+	CONSTRAINT IsCity FOREIGN KEY(MemberCityId) REFERENCES citys(CityId)
+);
+```
+
+### 3. 删除外键约束
+
+- 当表格不再需要外键约束的时候可以直接将外键约束清除掉
+
+```sql
+ALTER TABLE 从表的名字 DROP FOREIGN KEY 之前定的变量名称;
+```
+
+- 例如: 
+
+```sql
+ALTER TABLE member DROP FOREIGN KEY IsCity;
+```
+
+### 4. 添加外键约束
+
+- 当表格后期需要使用外键约束, 或被误删的时候又想添加回去的时候可以执行以下命令:
+
+```sql
+ALTER TABLE Member ADD CONSTRAINT IsCity FOREIGN KEY(MemberCityId) REFERENCES citys(CityId)
+
+-- 简写方式( 不推荐 )
+ALTER TABLE Member ADD FOREIGN KEY(MemberCityId) REFERENCES citys(CityId)
+```
+
+- 不管是前期创建的时候添加的外键还是后期因需要等情况添加的外键, 都需要注意: 主表( 城市表 ) 和 从表( 成员表 ), 连接的数据类型需要保持一致性, 包括类型, 以及内部的内容
+
+```
+-- 例如此处需要添加一个 Tyke 且是 上海市金山区的, 然而主表城市表中并没有该项
+/* 如果直接书写 
+		INSERT INTO Member(MemberName, MemberAge, MemberSex, MemberCityId) VALUES('Tyke', 8, "男", 3);
+   的化就会报错, 该项并不存在, 所以需要先书写主表的新建城市, 然后再写从表的成员, 并为其添加城市代号
+*/
+INSERT INTO Citys(CityName, CityProvince) VALUES("上海", "金山");
+
+-- 创建完成后, 在创建从表的成员:
+INSERT INTO Member(MemberName, MemberAge, MemberSex, MemberCityId) VALUES('Tyke', 8, "男", 3);
+
+```
+
+- 反之, 删除时也是同理的, 先删除从表中带有需要删除的脏表部分, 再去删除主表的内容部分
+
+### 5. 级联删除
+
+- 可以达到删除主表的指定信息时, 连带从表的关联信息也会被一同删除
+
+```
+-- 在创建表格数据时使用:
+CREATE TABLE 表名称(
+	oId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	oName VARCHAR(20),
+	oAge INT,
+	oSex VARCHAR(10),
+	oCityId INT,
+	-- 添加外键约束
+	CONSTRAINT IsCity FOREIGN KEY(MemberCityId) REFERENCES citys(CityId)
+	
+	-- 添加级联删除
+	ON DELETE CASCADE
+);
+
+/*
+	这样的话:
+	Data 1              Data 2
+	ID, Name, Data2Id   ID, Name, oProvince
+	1, A, 1             1, 北京, 通州
+	2, B, 1             2, 北京, 丰台
+	3, C, 2
+	4, D, 2
+	5, E, 1
+	
+	一旦删除 Data 2 中的 编号 为 2 的表格时, 会连带 Data 1 中 Data2Id 为 2 连接的数据一并删除
+	DELETE FROM DataTwo WHERE id = 2;
+	
+	Data 1              Data 2
+	ID, Name, Data2Id   ID, Name, oProvince
+	1, A, 1             1, 北京, 通州
+	2, B, 1
+	5, E, 1
+*/
+```
+
+### 6. 多对多表
+
+- 在记录学生, 课程, 选课 时, 两张表明显是不够用的
+
+``` md
+/* -- 学生表
+id, name, age, sex
+===================
+1, '张三', 18, '男'
+2, '李四', 19, '男'
+3, '王芳', 17, '女'
+4, '赵六', 20, '男'
+===================
+*/
+
+/* -- 课程
+ClassId, ClassName
+===================
+1, "语文"
+2, "数学"
+3, "英语"
+4, "物理"
+5, "化学"
+6, "历史"
+7, "地理"
+8, "生物"
+9, "政治"
+===================
+*/
+
+-- 在这种情况下, 在学生后面添加也不好, 在课程后面添加就更不要想了, 因为比学生后面添加的会更多...500个学生的话后面就要扩建 500 个格子了, 而学生的话, 每一个学生选什么课, 选几节课都不好说所以也被 pass掉了, 最终我们只能被迫建立第三张表格进行记录
+
+/* --选课
+name, ClassName
+===================
+1, 1 => 张三, 语文课
+1, 2 => 张三, 数学课
+2, 1 => 李四, 语文课
+3, 3 => 王芳, 英语课
+....
+===================
+*/
+
+```
 
