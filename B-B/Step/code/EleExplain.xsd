@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.newWeb.com/xml"
+    elementFormDefault="qualified"    
+>
+
+<!-- 创建一个 根 元素 -->
+<xs:element name="students" type="xs:string" />
+</xs:schema>
+
+<!--
+    详解:
+        @name: 元素名的名称, 如上: xml => <students></students>
+        @type: 元素的类型, 如上: string => <students>string</students>
+            A. xs:string: 字符串类型
+            B. xs:decimal: 十进制类型
+            C: xs:integer: 整数类型
+            D: xs:boolean: 布尔类型
+            E: xs:date: 日期类型
+            F: xs:time: 时间类型
+        ※ 注: 当然也可以使用包含的形式去定义最终的类型
+        
+        <xs:element name="元素名" type="包含的元素名" />
+        <xs:complexType name="包含的元素名">
+            <xs:sequence>
+                <xs:element name="元素名" type="元素类型" />
+            </xs:sequence>
+        </xs:complexType>
+
+        @complexType: 复杂类型
+        @sequence: 顺序
+
+        拓展:
+            
+            单选值 ( 必须按照规定值书写 ): {
+                @xs:simpleType: 简单类型
+                    name: 被规定的类型名
+                    @xs:restriction: 限制
+                        base: 基础
+                        @xs:enumeration: 枚举
+                            value: 值
+            }
+
+        例子:
+            <xs:element name="sex" type="sexType" />
+            <xs:simpleType name="sexType">
+                <sx:restriction base="xs:string">
+                    <sx:enumeration value="男" />
+                    <sx:enumeration value="女" />
+                </sx:restriction>
+            </xs:simpleType>
+-->
+<xs:element name="Bank" type="BankType" />
+<xs:complexType name="BankType">
+    <xs:sequence>
+        <xs:element name="UserName" type="xs:string" />
+        <xs:element name="PassWord" type="xs:string" />
+        <xs:element name="Balance" type="xs:string" />
+    </xs:sequence>
+</xs:complexType>
+
+<!--
+    拓展:
+
+        限制值 ( 必须按照规定值书写 ): {
+            @xs:simpleType: 简单类型
+                name: 被规定的类型名
+                @xs:restriction: 限制
+                    base: 基础
+                    @xs:minInclusive: 最小值
+                    @xs:maxInclusive: 最大值
+        }
+
+    例子:
+        <xs:element name="age" type="ageType" />
+        <xs:simpleType name="ageType">
+            <sx:restriction base="xs:integer">
+                <sx:minInclusive value="18" />
+                <sx:maxInclusive value="60" />
+            </sx:restriction>
+        </xs:simpleType>
+-->
+
+<xs:element name="age" type="ageType" />
+<xs:simpleType name="ageType">
+    <sx:restriction base="xs:integer">
+        <sx:minInclusive value="18" />
+        <sx:maxInclusive value="60" />
+    </sx:restriction>
+</xs:simpleType>
+
+<!--
+    拓展:
+        内容限制 ( 必须按照规定值书写 ): {
+            @xs:simpleType: 简单类型
+                name: 被规定的类型名
+                @xs:restriction: 限制
+                    base: 基础
+                    @xs:pattern: 模式
+                        value: 值
+        }
+
+    例子:
+        <xs:element name="phone" type="phoneType" />
+        <xs:simpleType name="phoneType">
+            <sx:restriction base="xs:string">
+                <sx:pattern value="data-/d{1,4}" /> // 表示: data-1~4位数字
+            </sx:restriction>
+        </xs:simpleType>
+
+-->
+
+<xs:element name="phone" type="phoneType" />
+<xs:simpleType name="phoneType">
+    <sx:restriction base="xs:string">
+        <sx:pattern value="data-/d{1,4}" />
+    </sx:restriction>
+</xs:simpleType>
+
+<!-- 限制值 string - 示例 -->
+<xs:element name="phone" type="phoneType" />
+<xs:simpleType name="phoneType">
+    <sx:restriction base="xs:string">
+        {{ 限制值体 }}
+    </sx:restriction>
+</xs:simpleType>
+
+<sx:pattern value="data | date" />
+<!-- ! 此方法说明的是: 该值要么是 data 要么是 date -->
+
+<sx:pattern value="[A-Z][A-Z]"/>
+<!-- ! 此方法说明的是: 该元素只能接受 2个 A ~ Z 的大写字母 -->
+
+<sx:pattern value="[a-zA-Z][a-zA-Z]"/>
+<!-- ! 此方法说明的是: 该元素只能接受 2个 a ~ z || A ~ Z 的大 ( 小 ) 写字母 -->
+
+<sx:pattern value="[abc]"/>
+<!-- ! 此方法说明的是: 该元素只能接受 a, b, c 的其中一个值-->
+
+<sx:pattern value="o[A-Z]+"/>
+<!-- ? 参考示例: odata -->
+<!-- ! OData ( X ) -->
+<!-- ! Odata ( X ) -->
+<!-- ! ODATA ( X ) -->
+<!-- ! odata ( X ) -->
+<!-- * oData ( O ) -->
+<!-- ! 此方法说明的是: 该元素只能接受 o 开头后面接大写字母的 -->
+
+<sx:pattern value="[a-zA-Z0-9]{6}"/>
+<!-- ! 此方法说明的是: 该元素只能接受 6个 a ~ z || A ~ Z || 0 ~ 9 的大 ( 小 ) 写字母 || 数字 混合体 -->
+
+<!-- 限制值 integer - 数字示例 -->
+<xs:element name="phone" type="phoneType" />
+<xs:simpleType name="phoneType">
+    <sx:restriction base="xs:string">
+        {{ 限制值体 }}
+    </sx:restriction>
+</xs:simpleType>
+
+<sx:pattern value="[0-9][0-9]"/>
+<!-- ! 此方法说明的是: 该元素只能接受 2个 0 ~ 9 的数字 -->
+
+<sx:pattern value="[0-9]{1,4}"/>
+<!-- ! 此方法说明的是: 该元素只能接受 1 ~ 4 个 0 ~ 9 的数字 -->

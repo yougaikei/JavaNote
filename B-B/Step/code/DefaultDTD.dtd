@@ -1,0 +1,127 @@
+<!-- 规范元素 -->
+
+<!-- 
+    创建一个有 width 的元素:
+    <!ELEMENT 元素名 类别> // 类别为: EMPTY( 空元素 ) | ANY( 任意元素 ) | #PCDATA( 文本元素 )
+    <!ATTLIST 元素名 属性 CDATA "默认值"> // CDATA 为: 字符串
+ -->
+<!ELEMENT Students (Student+)>
+<!ATTLIST Students width CDATA "0">
+
+<!--
+// 如果 Students 被定义为带有 CDATA 类型, 且 width 属性的空元素。如果宽度没有被设定，其默认值为0 。
+<Students width="0">
+    <student></student>
+    ...
+    <student></student>
+</Students>
+
+或者
+
+<Students width>
+    <student></student>
+    ...
+    <student></student>
+</Students>
+-->
+
+<!--
+    创建一个非强制属性的元素:
+    <!ELEMENT 元素名 类别> // 类别为: EMPTY( 空元素 ) | ANY( 任意元素 ) | #PCDATA( 文本元素 )
+    <!ATTLIST 元素名 属性 CDATA "默认值" #IMPLIED> // #IMPLIED 为: 非强制属性; CDATA 为: 字符串
+-->
+
+<!ELEMENT Students (Student+)>
+<!ATTLIST Students width CDATA #IMPLIED>
+
+<!--
+    <Students>
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+
+    或 ( 此处的 width 属性为非强制属性 ):
+
+    <Students width="0">
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+
+-->
+
+<!--
+    创建一个带有固定属性的元素 ( 但没有默认值 ):
+    <!ELEMENT 元素名 类别> // 类别为: EMPTY( 空元素 ) | ANY( 任意元素 ) | #PCDATA( 文本元素 )
+    <!ATTLIST 元素名 属性 CDATA #REQUIRED> // #REQUIRED 为: 固定属性; CDATA 为: 字符串
+-->
+
+<!ELEMENT Students (Student+)>
+<!ATTLIST Students width CDATA #REQUIRED>
+
+<!--
+    <Students width="0"> // 此处必须为 width 属性赋值, 且该属性为固定属性 ( 属性值不能为空 ), 必须存在
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+-->
+
+<!--
+    创建一个带有固定属性, 属性值的元素:
+    <!ELEMENT 元素名 类别> // 类别为: EMPTY( 空元素 ) | ANY( 任意元素 ) | #PCDATA( 文本元素 )
+    <!ATTLIST 元素名 属性名 属性类型 #FIXED 固定值>
+-->
+
+<!ELEMENT Students (Student+)>
+<!ATTLIST Students width CDATA #FIXED "50">
+
+<!--
+    <Students width="50"> // 此处的 width 属性为固定属性, 且属性值为 50, 且该属性值不能被修改
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+-->
+
+<!--
+    创建一个带有选择属性的元素:
+    <!ELEMENT 元素名 类别> // 类别为: EMPTY( 空元素 ) | ANY( 任意元素 ) | #PCDATA( 文本元素 )
+    <!ATTLIST 元素名 属性名 ( 属性值1 | 属性值2 | ... | 属性值n ) 默认值>
+-->
+
+<!ELEMENT Students (Student+)>
+<!ATTLIST Students width ( 0 | 50 | 100 ) "100">
+
+<!--
+    <Students width> // 此处的 width 属性为选择属性, 且默认属性值为 100, 可以从 0, 50, 100 中再做选择
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+
+    或者
+
+    <Students width="0"> 
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+
+    或者
+
+    <Students width="50"> 
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+
+    或者
+
+    <Students width="100"> 
+        <student></student>
+        ...
+        <student></student>
+    </Students>
+-->

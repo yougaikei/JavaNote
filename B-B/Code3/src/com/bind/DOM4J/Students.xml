@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<students
+        xmlns="http://www.StudentsResolve.com/xml"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.StudentsResolve.com/xml StudentsResolve.xsd">
+
+    <!-- oData1 =[1, '刘一依', 12, '男', 1, '文学系', 1, null, '123456'] -->
+    <student id="oData1">
+        <SId>1</SId>
+        <SName>刘一依</SName>
+        <SAge>12</SAge>
+        <SSex>男</SSex>
+        <SGrade>1</SGrade>
+        <SDepartment>文学系</SDepartment>
+        <STuition>1</STuition>
+        <SRemarks/>
+        <SPassWord>123456</SPassWord>
+    </student>
+
+    <!-- oData2 = [ 2, '陈晨', 15, '男', 3, '文学系', 1, null, '123456' ] -->
+    <student id="oData2">
+        <SId>1</SId>
+        <SName>陈晨</SName>
+        <SAge>15</SAge>
+        <SSex>男</SSex>
+        <SGrade>3</SGrade>
+        <SDepartment>文学系</SDepartment>
+        <STuition>1</STuition>
+        <SRemarks/>
+        <SPassWord>123456</SPassWord>
+    </student>
+
+    <!-- oData3 = [3, '张永昌', 13, '男', 2, '理综系', 1, null, '123456'] -->
+    <student id="oData3">
+        <SId>1</SId>
+        <SName>张永昌</SName>
+        <SAge>13</SAge>
+        <SSex>男</SSex>
+        <SGrade>2</SGrade>
+        <SDepartment>理综系</SDepartment>
+        <STuition>1</STuition>
+        <SRemarks/>
+        <SPassWord>123456</SPassWord>
+    </student>
+
+</students>

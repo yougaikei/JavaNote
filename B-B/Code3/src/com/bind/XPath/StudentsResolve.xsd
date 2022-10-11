@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema xmlns="http://www.StudentsResolve.com/xml"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.StudentsResolve.com/xml"
+        elementFormDefault="qualified">
+
+    <!--  创建一个 students 元素, 类型: students  -->
+    <xs:element name="students" type="studentsType"/>
+
+    <!--  创建一个 students 类型  -->
+    <xs:complexType name="studentsType">
+        <!--  声明内部包含元素  -->
+        <xs:sequence>
+            <!--  创建一个 student 元素, 类型: student  -->
+            <xs:element name="student" type="studentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--  创建一个 student 类型  -->
+    <xs:complexType name="studentType">
+        <!--  声明内部包含元素  -->
+        <xs:sequence>
+            <!-- 创建一个 SId 元素, 类型: SIdType -->
+            <xs:element name="SId" type="SIdType"/>
+            <!-- 创建一个 SName 元素, 类型: SNameType -->
+            <xs:element name="SName" type="SNameType"/>
+            <!-- 创建一个 SAge 元素, 类型: SAgeType -->
+            <xs:element name="SAge" type="SAgeType"/>
+            <!-- 创建一个 SSex 元素, 类型: SSexType -->
+            <xs:element name="SSex" type="SSexType"/>
+            <!-- 创建一个 SGrade 元素, 类型: SGradeType -->
+            <xs:element name="SGrade" type="SGradeType"/>
+            <!-- 创建一个 SDepartment 元素, 类型: SDepartmentType -->
+            <xs:element name="SDepartment" type="SDepartmentType"/>
+            <!-- 创建一个 STuition 元素, 类型: STuitionType -->
+            <xs:element name="STuition" type="STuitionType"/>
+            <!-- 创建一个 SRemarks 元素, 类型: xs:string -->
+            <xs:element name="SRemarks" type="xs:string"/>
+            <!-- 创建一个 SPassWord 元素, 类型: SPassWordType -->
+            <xs:element name="SPassWord" type="SPassWordType"/>
+        </xs:sequence>
+        <!--  声明 student 内部包含 id 属性  -->
+        <xs:attribute name="id" type="idType" use="required"/>
+    </xs:complexType>
+
+    <!--  创建一个 sid 类型: 数据库 Key ID  -->
+    <xs:simpleType name="SIdType">
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[0-9]{1,4}" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--  创建一个 SName 类型: 姓名  -->
+    <xs:simpleType name="SNameType">
+        <xs:restriction base="xs:string">
+            <!-- 限制名字长度位 3 - 4 个字符  -->
+            <xs:minLength value="2"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--  创建一个 SAge 类型: 年龄 -->
+    <xs:simpleType name="SAgeType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="100" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 创建一个 SSex 类型: 性别 -->
+    <xs:simpleType name="SSexType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="男" />
+            <xs:enumeration value="女" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 创建一个 SGrade 类型: 年级 -->
+    <xs:simpleType name="SGradeType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="3" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!--  创建一个 SDepartment 类型: 系别 -->
+    <xs:simpleType name="SDepartmentType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="文学系" />
+            <xs:enumeration value="理综系" />
+            <xs:enumeration value="计算机系" />
+            <xs:enumeration value="医学系" />
+            <xs:enumeration value="道法系" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 创建一个 STuition 类型: 学费缴费状况 -->
+    <xs:simpleType name="STuitionType">
+        <xs:restriction base="xs:integer">
+            <!-- 限制学费情况为 0 ( 未缴纳 ) 或 1 ( 已缴纳 )  -->
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 创建一个 SPassWord 类型: 密码 -->
+    <xs:simpleType name="SPassWordType">
+        <xs:restriction base="xs:string">
+            <!-- 限制密码长度为 6 位  -->
+            <xs:length value="6" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- 创建一个 id 类型  -->
+    <xs:simpleType name="idType">
+        <!--  声明 idType 类型 -->
+        <xs:restriction base="xs:string">
+            <!-- 声明 idType 的值: 小写 大写 后面跟随机大小写 -->
+            <xs:pattern value="([a-z][A-Z])[a-zA-Z0-9]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

@@ -1,0 +1,16 @@
+<?xml verison="1.0" encoding="utf-8"?>
+<user>
+    <name>陈一凡</name>
+    <age>18></age>
+    <sex>男</sex>
+</user>
+<user>
+    <name>刘世明</name>
+    <age>20</age>
+    <sex>男</sex>
+</user>
+<user>
+    <name>胡雨欣</name>
+    <age>19</age>
+    <sex>女</sex>
+</user>

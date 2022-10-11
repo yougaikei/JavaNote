@@ -1,0 +1,20 @@
+<!-- schema 说明文档 -->
+<!-- schema 是 xsd 文档的根元素 -->
+<!-- 使用時： -->
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns="http://www.newWeb.com/xml"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.newWeb.com/xml"
+    elementFormDefault="qualified"
+></xsd:schema>
+
+<!--
+    详解:
+        xmlns="指出默认的命名空间"
+        xmlns:xs="显示 schema 中需要用到的 元素 和 数据类型来自命名空间的 URI, 且同时规定了这些元素和数据类型的前缀 xs || xsd"
+        targetNamespace="指出了 schema 中定义的元素和类型所属的命名空间"
+        elementFormDefault="qualified" 指出了任何 xml 实例文档中所使用了 schema 中定义的 元素 的必须被其限定
+            unqualified: 元素的命名方式为: 元素名
+            qualified: 元素的命名方式为: 前缀:元素名
+-->

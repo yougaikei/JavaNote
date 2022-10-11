@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE students SYSTEM "Student.dtd">
+
+<students>
+    <student id="oStu1">
+        <name>胡明明</name>
+        <age>18</age>
+        <sex>男</sex>
+    </student>
+    <student id="oStu2">
+        <name>梁永超</name>
+        <age>22</age>
+        <sex>男</sex>
+    </student>
+</students>

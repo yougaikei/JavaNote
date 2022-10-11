@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema 
+    xmlns="http://www.atteriBute.com/xml"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.atteriBute.com/xml"
+    elementFormDefault="qualified">
+    
+<!-- 此处举例 students => student(dataBase) -->
+<!-- 此处定义一个 students 元素, 类型 students 类型 -->
+<xs:element name="students" type="studentsType"/>
+
+<!-- 定义 students 类型 -->
+<xs:complexType name="studentsType">
+    <!-- 定义包含元素 -->
+    <xs:sequence>
+        <!-- 定义一个 student 元素, 类型为 student 类型 -->
+        <xs:element name="student" type="studentType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+</xs:complexType>
+
+<!-- 此处定义的是 student 类型 -->
+<xs:complexType name="studentType">
+    <!-- 定义包含元素 -->
+    <xs:sequence>
+        <!-- 定义一个 name 元素, 类型 String -->
+        <xs:element name="name" type="xs:string"/>
+    </xs:sequence>
+
+    <!-- 此处给 student 标签赋值: A. 类型: String; B: use: 必须值 -->
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <!-- 定义默认值 <student id></student> -->
+    <!-- <xs:attribute name="id" type="xs:string" default="dataBox"/> -->
+    <!-- 定义指定值 <student id="dataBox"></student> -->
+    <!-- <xs:attribute name="SName" type="xs:string" fixed="dataBox"/> -->
+</xs:complexType>
+
+</xs:schema>
+
+<!-- 解析后的
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+    <student id="1">
+        <name>张三</name>
+    </student>
+    <student id="2">
+        <name>李四</name>
+    </student>
+</students>
+-->

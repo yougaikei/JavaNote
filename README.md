@@ -1,5 +1,43 @@
 # Java Note
 
+---
+
+## Menu
+
+### Is Modules A ( Java )
+
+- A-A: Java 基础
+
+- A-B: Java 模块化
+
+- A-C: Java 库
+
+- A-D: Java 库
+
+- A-E: Java 新特性
+
+### Is Modules B ( MySQL 数据库 ) 
+
+- B-A MySQL 基础
+
+- B-B JDBC + XML
+
+### Is Modules C ( 前端开发 )
+
+- C-A: 前端开发基础
+
+- C-B: 前端开发高级
+
+### Is Modules D ( Java Web )
+
+- D-A: Java Web
+
+- D-B: Java Web
+
+- D-C: Linux 操作基础
+
+---
+
 ##  To Update
 
 ### 2022-09-19
