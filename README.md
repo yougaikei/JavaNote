@@ -52,6 +52,10 @@
 
 - Added JDBC content and improved some SQL content
 
+### 2022-10-11
+
+- Complete SQL query description and XML document description
+
 ---
 
 ## Statement
