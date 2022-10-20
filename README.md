@@ -56,6 +56,10 @@
 
 - Complete SQL query description and XML document description
 
+### 2022-10-20
+
+- Completed MySQL small project
+
 ---
 
 ## Statement

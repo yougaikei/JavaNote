@@ -3123,7 +3123,7 @@ public class XPathGetContent {
         Document oDoc = oReader.read("src/com/bind/XPath/Students.xml");
 
         // 分割线*10 注释 分割线*10
-        System.out.println("========== 获取元素 2 的 SName ==========");
+        System.out.println("========== 获取元素 1 的 SName ==========");
 
         // 获取默认( 第一个元素 )的 SName
         Node node = oDoc.selectSingleNode("/students/student/SName");
